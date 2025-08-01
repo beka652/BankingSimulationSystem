@@ -2,10 +2,7 @@ package BankingSystem.View.WindowPanels;
 
 
 import BankingSystem.Model.ReportObject;
-import BankingSystem.View.Events.CreateAccountEvent;
-import BankingSystem.View.Events.DepositEvent;
-import BankingSystem.View.Events.TransferEvent;
-import BankingSystem.View.Events.WithdrawEvent;
+import BankingSystem.View.Events.*;
 import BankingSystem.View.Mainframe;
 import BankingSystem.View.WindowPanels.Windows.*;
 
@@ -21,6 +18,7 @@ public class WindowPanelContainer extends JPanel{
     private CardLayout cardLayout;
     private Mainframe mainframe;
     private ReportWindow reportWindow;
+    private DeleteWindow deleteWindow;
 
     private String currentWindow = "";
 
@@ -32,12 +30,14 @@ public class WindowPanelContainer extends JPanel{
         depositWindow = new DepositWindow();
         createAccountWindow = new CreateAccountWindow();
         reportWindow = new ReportWindow();
+        deleteWindow = new DeleteWindow();
 
         transferWindow.setWindowContainer(this);
         withdrawWindow.setWindowContainer(this);
         depositWindow.setWindowContainer(this);
         createAccountWindow.setWindowContainer(this);
         reportWindow.setWindowContainer(this);
+        deleteWindow.setWindowContainer(this);
 
         cardLayout = new CardLayout();
         setLayout(cardLayout);
@@ -47,6 +47,7 @@ public class WindowPanelContainer extends JPanel{
         add(depositWindow, "deposit");
         add(createAccountWindow, "create account");
         add(reportWindow, "report");
+        add(deleteWindow, "delete");
 
         cardLayout.show(this, "create account");
         currentWindow = "create account";
@@ -77,6 +78,9 @@ public class WindowPanelContainer extends JPanel{
     public void withdraw(WithdrawEvent event) {
         mainframe.withdraw(event);
     }
+    public void delete(DeleteEvent event) {
+        mainframe.delete(event);
+    }
     public ReportObject getData(String dataType){
         return mainframe.getReport(dataType);
     }
@@ -87,6 +91,7 @@ public class WindowPanelContainer extends JPanel{
             case "deposit" -> depositWindow.clear();
             case "create account" -> createAccountWindow.clear() ;
             case "report" -> reportWindow.clear();
+            case "delete" -> deleteWindow.clear();
         }
 
     }
@@ -96,9 +101,11 @@ public class WindowPanelContainer extends JPanel{
             case "transfer" -> transferWindow.setExecutionReport(report);
             case "withdraw" -> withdrawWindow.setExecutionReport(report);
             case "deposit" -> depositWindow.setExecutionReport(report);
-            case("create account") -> createAccountWindow.setExecutionReport(report);
+            case "create account" -> createAccountWindow.setExecutionReport(report);
+            case "delete" -> deleteWindow.setExecutionReport(report);
 
         }
 
     }
+
 }

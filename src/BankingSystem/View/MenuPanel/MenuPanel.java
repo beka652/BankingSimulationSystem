@@ -26,6 +26,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private JButton depositMenu;
     private JButton transferMenu;
     private JButton reportMenu;
+    private JButton deleteMenu;
     private Mainframe mainframe;
 
 
@@ -37,12 +38,14 @@ public class MenuPanel extends JPanel implements ActionListener {
         depositMenu = new JButton("      deposit       ");
         transferMenu = new JButton("      transfer      ");
         reportMenu = new JButton("        report       ");
+        deleteMenu = new JButton("       delete       ");
 
         createAccountMenu.addActionListener(this);
         withdrawMenu.addActionListener(this);
         depositMenu.addActionListener(this);
         transferMenu.addActionListener(this);
         reportMenu.addActionListener(this);
+        deleteMenu.addActionListener(this);
 
         setLayout(new GridBagLayout());
 
@@ -73,6 +76,11 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(transferMenu, gc);
 
         // fifth row
+        gc.gridy++;
+        add(deleteMenu, gc);
+
+        // sixth row
+
         gc.gridy++;
         gc.weighty = 1;
         add(reportMenu, gc);

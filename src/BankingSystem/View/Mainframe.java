@@ -2,10 +2,7 @@ package BankingSystem.View;
 
 import BankingSystem.Controller.Controller;
 import BankingSystem.Model.ReportObject;
-import BankingSystem.View.Events.CreateAccountEvent;
-import BankingSystem.View.Events.DepositEvent;
-import BankingSystem.View.Events.TransferEvent;
-import BankingSystem.View.Events.WithdrawEvent;
+import BankingSystem.View.Events.*;
 import BankingSystem.View.MenuPanel.MenuPanel;
 import BankingSystem.View.WindowPanels.WindowPanelContainer;
 
@@ -66,6 +63,9 @@ public class Mainframe extends JFrame {
         controller.withdraw(event);
     }
 
+    public void delete(DeleteEvent event) {
+        controller.delete(event);
+    }
     public void setExecutionReport(HashMap<String, String> report){
        windowPanelContainer.setExecutionReport(report);
 

@@ -1,10 +1,7 @@
 package BankingSystem.Controller;
 
 import BankingSystem.Model.ReportObject;
-import BankingSystem.View.Events.CreateAccountEvent;
-import BankingSystem.View.Events.DepositEvent;
-import BankingSystem.View.Events.TransferEvent;
-import BankingSystem.View.Events.WithdrawEvent;
+import BankingSystem.View.Events.*;
 import BankingSystem.View.Mainframe;
 import BankingSystem.Model.Bank;
 import BankingSystem.Exceptions.*;
@@ -94,6 +91,27 @@ public class Controller {
         }
 
     }
+    public void delete(DeleteEvent event) {
+        try{
+            String accountNumber = accountNumberValidator(event.getAccountNumber());
+
+            var report = bank.delete(accountNumber);
+
+            mainframe.setExecutionReport(report);
+
+        } catch (Exception e) {
+
+            var failure = new HashMap<String, String>();
+            failure.put("source", "delete");
+            failure.put("type", "Failure");
+            failure.put("report", e.getMessage());
+
+            mainframe.setExecutionReport(failure);
+
+
+        }
+    }
+
     public void withdraw(WithdrawEvent event){
         try {
             String accountNumber = accountNumberValidator(event.getAccountNumber());
@@ -101,6 +119,7 @@ public class Controller {
 
             var report = bank.withdraw(accountNumber, amount);
             mainframe.setExecutionReport(report);
+
         } catch (Exception e) {
 
             var failure = new HashMap<String, String>();
@@ -145,4 +164,5 @@ public class Controller {
 
 
     }
+
 }

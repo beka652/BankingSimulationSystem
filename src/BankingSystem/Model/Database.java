@@ -110,6 +110,16 @@ public class Database {
 
 
     }
+    public void delete(Account account) throws SQLException{
+
+        String sqlQuery = "DELETE FROM accounts WHERE accountNumber = ?";
+
+        try(Connection connection = connect();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+            preparedStatement.setString(1, account.getAccountNumber());
+            preparedStatement.executeUpdate();
+        }
+    }
 
 
     public  void fetchAccounts(HashMap<String, Account> accountHashMap) throws SQLException{

@@ -1,10 +1,7 @@
 package BankingSystem.Model;
 
 
-import BankingSystem.Exceptions.AccountNotFoundException;
-import BankingSystem.Exceptions.InvalidDepositAmount;
-import BankingSystem.Exceptions.InvalidInitialDeposit;
-import BankingSystem.Exceptions.InvalidWithdrawAmount;
+import BankingSystem.Exceptions.*;
 import BankingSystem.Interfaces.Bankable;
 
 import java.time.LocalDate;
@@ -96,7 +93,7 @@ public class Bank implements Bankable {
 
 
             var success = new HashMap<String, String>();
-            success.put("source", "transfer");
+            success.put("source", "withdraw");
             success.put("type", "Success");
             success.put("report","Withdrawal completed successfully" );
             return success;
@@ -166,13 +163,36 @@ public class Bank implements Bankable {
             Account toAccount;
             // check for the existence of both accounts
             if ((fromAccount= accountsHashMap.get(fromAccountNumber)) == null) throw new AccountNotFoundException();
-            if ((toAccount= accountsHashMap.get(fromAccountNumber)) == null) throw new AccountNotFoundException();
+            if ((toAccount= accountsHashMap.get(toAccountNumber)) == null) throw new AccountNotFoundException();
 
             /* transfer: is the same as withdrawing from one account and depositing into the other therefore we use
              the already defined deposit and withdraw function to achieve the same goal*/
 
-            withdraw(fromAccountNumber, amount);
-            deposit(toAccountNumber, amount);
+            if (amount <=0 ) throw new InvalidAmountException();
+            if (fromAccount.getBalance() < amount) throw new InvalidAmountException();
+
+            fromAccount.withdraw(amount);
+            toAccount.deposit(amount);
+
+            database.updateAccountsTable(fromAccount);
+            database.updateAccountsTable(toAccount);
+
+            database.recordTransaction(new Transaction(
+                    generateTransactionID(),
+                    fromAccount.getAccountNumber(),
+                    "transfer + ",
+                    amount,
+                    LocalDate.now().toString()
+                    ));
+
+            database.recordTransaction(new Transaction(
+                    generateTransactionID(),
+                    toAccount.getAccountNumber(),
+                    "transfer - ",
+                    amount,
+                    LocalDate.now().toString()
+            ));
+
 
 
 
@@ -192,6 +212,33 @@ public class Bank implements Bankable {
 
 
     }
+
+    public HashMap<String, String> delete(String accountNumber) {
+        try{
+            Account account;
+            if ((account= accountsHashMap.get(accountNumber)) == null) throw new AccountNotFoundException();
+
+            database.delete(account);
+            accountsHashMap.remove(accountNumber);
+
+            var success = new HashMap<String, String>();
+            success.put("type", "Success");
+            success.put("source", "delete");
+            success.put("report","Deletion completed successfully" );
+            return success;
+
+        } catch (Exception e){
+            var failure = new HashMap<String, String>();
+            failure.put("type", "Failure");
+            failure.put("source", "delete");
+            failure.put("report", e.getMessage() );
+            return failure;
+
+
+
+        }
+    }
+
 
     public ReportObject getReport(String reportType) {
         try{

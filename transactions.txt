@@ -1,0 +1,5 @@
+| accountNumber  | transactionID | transactionAmount | date | transactionType |
+| ba850ade | 4f94e18c-1547-4204-b816-0ad7177b10a3 | 1000.0 | 2025-08-01 | withdraw |
+| ba850ade | 8c184310-2b5e-49c1-a947-bb591318f632 | 1000.0 | 2025-08-01 | deposit |
+| ba850ade | 519d49e7-f1a6-4666-a518-ff626e0dbbc5 | 1000.0 | 2025-08-01 | transfer +  |
+| 46fef1f3 | aeeffc66-c738-4f99-bab7-046d05d12978 | 1000.0 | 2025-08-01 | transfer -  |

@@ -107,6 +107,6 @@ src/BankingSystem/
 
 ## Author
 
-**Student Name**  
+**BEREKET NEBIYU**  
 Object-Oriented Programming with Java - Final Project  
-Bereket Nebiyu - 2025 
+BITS COLLEGE - 2025 

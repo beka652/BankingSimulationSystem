@@ -9,8 +9,8 @@ public class Account implements IAccount {
     private String accountNumber;
     private double balance;
 
-    //--------------//
-    private  Person person;
+
+
 
     public Account(String name, String accountNumber, double balance) {
         this.name = name;
@@ -19,7 +19,7 @@ public class Account implements IAccount {
     }
     public Account(Person person, String AccountNumber, double balance){
         // This was created on to show method overloading -- not used within the project
-        this.person = person;
+        this.name = person.getName();
         this.accountNumber = getAccountNumber();
         this.balance = balance;
 

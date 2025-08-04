@@ -8,7 +8,7 @@ import java.util.List;
 
 
 
-public class Database {
+public class Database extends IBankDatabase{
 
     private static String url = "jdbc:sqlite:Bank.db";
 
@@ -23,6 +23,7 @@ public class Database {
 
     }
 
+    @Override
     public  void createAccountTable() throws SQLException{
 
         String sqlQuery = "CREATE TABLE IF NOT EXISTS accounts(" +
@@ -58,6 +59,8 @@ public class Database {
 
     }
 
+
+    @Override
     public   void  recordTransaction(Transaction transaction) throws SQLException
     {
         String sqlQuery = "INSERT INTO transactions" +
@@ -77,7 +80,7 @@ public class Database {
         }
     }
 
-
+    @Override
     public  void addAccount(Account account) throws SQLException{
         // For adding new Account to Accounts table
 

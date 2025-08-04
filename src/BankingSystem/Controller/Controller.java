@@ -152,7 +152,7 @@ public class Controller {
 
     }
     public double amountValidator(String amount) throws Exception{
-        if (amount == null || amount.trim().isEmpty()){ throw new InvalidAccountNumberException();}
+        if (amount == null || amount.trim().isEmpty()){ throw new InvalidAmountException();}
         try{
             double amountInDouble = Double.parseDouble(amount.trim());
             return amountInDouble;

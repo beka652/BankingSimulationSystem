@@ -1,6 +1,8 @@
 package BankingSystem.Model;
 
 
+import BankingSystem.Model.Abstract.AbstractDatabase;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.List;
 
 
 
-public class Database extends IBankDatabase{
+public class Database extends AbstractDatabase {
 
     private static String url = "jdbc:sqlite:Bank.db";
 

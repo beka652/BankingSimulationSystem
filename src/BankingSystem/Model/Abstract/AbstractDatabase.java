@@ -1,9 +1,11 @@
-package BankingSystem.Model;
+package BankingSystem.Model.Abstract;
 
-import java.sql.Connection;
+import BankingSystem.Model.Account;
+import BankingSystem.Model.Transaction;
+
 import java.sql.SQLException;
 
-public abstract class IBankDatabase {
+public abstract class AbstractDatabase {
 
 
     public abstract void createAccountTable() throws SQLException;

@@ -10,11 +10,11 @@ import java.util.List;
 
 
 
-public class Database extends AbstractDatabase {
+public class DatabaseManager extends AbstractDatabase {
 
     private static String url = "jdbc:sqlite:Bank.db";
 
-    public Database() throws SQLException{
+    public DatabaseManager() throws SQLException{
         createTransactionsTable();
         createAccountTable();
     }

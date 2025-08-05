@@ -12,14 +12,14 @@ import java.util.UUID;
 public class Bank implements Bankable {
 
     private  HashMap<String, Account> accountsHashMap;
-    Database database;
+    DatabaseManager databaseManager;
 
     public Bank(){
         try {
 
             accountsHashMap = new HashMap<>();
-            database = new Database();
-            database.fetchAccounts(accountsHashMap);
+            databaseManager = new DatabaseManager();
+            databaseManager.fetchAccounts(accountsHashMap);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class Bank implements Bankable {
             Account account = new Account(name, generateAccountNumber(), initial_deposit);
 
             // Add the account to the account's table
-            database.addAccount(account);
+            databaseManager.addAccount(account);
 
             // Add it to the accounts hashmap for easy access
             accountsHashMap.put(account.getAccountNumber(), account);
@@ -81,10 +81,10 @@ public class Bank implements Bankable {
             account.withdraw(withdrawAmount);
 
             // update the accounts table
-            database.updateAccountsTable(account);
+            databaseManager.updateAccountsTable(account);
 
             // record the transaction
-            database.recordTransaction(new Transaction(
+            databaseManager.recordTransaction(new Transaction(
                     generateTransactionID(),
                     account.getAccountNumber(),
                     transactionType,
@@ -128,10 +128,10 @@ public class Bank implements Bankable {
             account.deposit(amount);
 
             // update the accounts table
-            database.updateAccountsTable(account);
+            databaseManager.updateAccountsTable(account);
 
             // record the transaction
-            database.recordTransaction(new Transaction(
+            databaseManager.recordTransaction(new Transaction(
                     generateTransactionID(),
                     account.getAccountNumber(),
                     transactionType,
@@ -174,10 +174,10 @@ public class Bank implements Bankable {
             fromAccount.withdraw(amount);
             toAccount.deposit(amount);
 
-            database.updateAccountsTable(fromAccount);
-            database.updateAccountsTable(toAccount);
+            databaseManager.updateAccountsTable(fromAccount);
+            databaseManager.updateAccountsTable(toAccount);
 
-            database.recordTransaction(new Transaction(
+            databaseManager.recordTransaction(new Transaction(
                     generateTransactionID(),
                     fromAccount.getAccountNumber(),
                     "transfer + ",
@@ -185,7 +185,7 @@ public class Bank implements Bankable {
                     LocalDate.now().toString()
                     ));
 
-            database.recordTransaction(new Transaction(
+            databaseManager.recordTransaction(new Transaction(
                     generateTransactionID(),
                     toAccount.getAccountNumber(),
                     "transfer - ",
@@ -218,7 +218,7 @@ public class Bank implements Bankable {
             Account account;
             if ((account= accountsHashMap.get(accountNumber)) == null) throw new AccountNotFoundException();
 
-            database.delete(account);
+            databaseManager.delete(account);
             accountsHashMap.remove(accountNumber);
 
             var success = new HashMap<String, String>();
@@ -242,7 +242,7 @@ public class Bank implements Bankable {
 
     public ReportObject getReport(String reportType) {
         try{
-             return database.report(reportType);
+             return databaseManager.report(reportType);
 
         } catch( Exception e) {
             return null;
